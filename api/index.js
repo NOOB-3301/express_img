@@ -9,7 +9,7 @@ app.get("/", (req, res) => {
   res.send("app on vercel");
 });
 
-app.get("/manga/image/:title", async (req, res) => {
+app.get("/manga/image/", async (req, res) => {
   const imageUrl = "https://uploads.mangadex.org/covers/8f3e1818-a015-491d-bd81-3addc4d7d56a/26dd2770-d383-42e9-a42b-32765a4d99c8.png";
 
   try {
