@@ -1,6 +1,5 @@
 import express from "express";
 import axios from "axios";
-
 const app = express();
 
 let manga_url = 'https://api.mangadex.org';
@@ -9,6 +8,11 @@ let cover_url = 'https://api.mangadex.org/cover/'
 app.get("/", (req, res) => {
   res.send("app on vercel");
 });
+
+app.use(cors({
+    origin: 'https://anime-website-ruddy.vercel.app', // Replace with your frontend's URL
+    credentials: true, // If you're dealing with credentials (e.g., cookies, HTTP authentication)
+  }));
 
 async function fetch_info(url, query) {
     try {
