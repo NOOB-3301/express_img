@@ -8,7 +8,7 @@ let manga_url = 'https://api.mangadex.org';
 let cover_url = 'https://api.mangadex.org/cover/';
 
 app.use(cors({
-    origin: 'http://localhost:5173', // Replace with your frontend's URL
+    origin: 'https://express-img.vercel.app/', // Replace with your frontend's URL
     credentials: true, // If you're dealing with credentials (e.g., cookies, HTTP authentication)
 }));
 
