@@ -36,7 +36,7 @@ app.get("/manga/image/", async (req, res) => {
   }
 });
 
-app.get("/manga/image/:coverid/:filename", async (req, res) => {
+app.get("apiv2/manga/image/:coverid/:filename", async (req, res) => {
     let coverid = req.params.coverid;
     let filename = req.params.filename;
 
