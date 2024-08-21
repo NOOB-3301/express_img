@@ -10,7 +10,7 @@ app.get("/", (req, res) => {
 });
 
 app.use(cors({
-    origin: 'https://anime-website-ruddy.vercel.app', // Replace with your frontend's URL
+    origin: 'http://localhost:5173', // Replace with your frontend's URL
     credentials: true, // If you're dealing with credentials (e.g., cookies, HTTP authentication)
   }));
 
