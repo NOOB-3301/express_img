@@ -43,7 +43,7 @@ app.get("/manga/image/:coverid/:filename", async (req, res) => {
     res.send(`This page is about coverid and filename: ${coverid}, ${filename}`);
 });
 
-app.get("/info/manga/:query", async (req, res) => {
+app.get("/manga/info/:query", async (req, res) => {
     let s_query = req.params.query;
     try {
         let response = await fetch_info(manga_url, s_query);
