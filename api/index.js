@@ -4,6 +4,7 @@ import axios from "axios";
 const app = express();
 
 let manga_url = 'https://api.mangadex.org';
+let cover_url = 'https://api.mangadex.org/cover/'
 
 app.get("/", (req, res) => {
   res.send("app on vercel");
@@ -19,6 +20,20 @@ async function fetch_info(url, query) {
     } catch (error) {
         console.error("Error fetching manga info:", error);
         throw error;
+    }
+}
+
+async function fetch_file_id(url,id) {
+    let full = `${url}${id}`
+
+    let full2 = `https://api.mangadex.org/cover?manga%5B%5D=${id}&order%5BcreatedAt%5D=asc&order%5BupdatedAt%5D=asc&order%5Bvolume%5D=asc`
+    
+    try{
+        const resp = await axios.get(full2)
+        return resp.data
+    }catch(err){
+        console.error("Error fetching manga info:", err)
+        throw err
     }
 }
 
@@ -43,6 +58,8 @@ app.get("/apiv2/manga/image/:coverid/:filename", async (req, res) => {
     res.send(`This page is about coverid and filename: ${coverid}, ${filename}`);
 });
 
+
+//for manga info
 app.get("/aviv2/manga/info/:query", async (req, res) => {
     let s_query = req.params.query;
     try {
@@ -52,5 +69,16 @@ app.get("/aviv2/manga/info/:query", async (req, res) => {
         res.status(500).send("Error fetching manga info.");
     }
 });
+
+//for cover realated info
+app.get('/aviv2/manga/cover/:manga_id', async(req,res)=>{
+    let id= req.params.manga_id
+    try{
+        let resp = await fetch_file_id(cover_url, id)
+        res.json(resp)
+    }catch(err){
+        res.status(500).send(err)
+    }
+})
 
 app.listen(3000, () => console.log("Server ready on port 3000."));
