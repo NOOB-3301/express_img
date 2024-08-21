@@ -1,18 +1,20 @@
 import express from "express";
 import axios from "axios";
+import cors from "cors"; // Import the CORS package
+
 const app = express();
 
 let manga_url = 'https://api.mangadex.org';
-let cover_url = 'https://api.mangadex.org/cover/'
-
-app.get("/", (req, res) => {
-  res.send("app on vercel");
-});
+let cover_url = 'https://api.mangadex.org/cover/';
 
 app.use(cors({
     origin: 'http://localhost:5173', // Replace with your frontend's URL
     credentials: true, // If you're dealing with credentials (e.g., cookies, HTTP authentication)
-  }));
+}));
+
+app.get("/", (req, res) => {
+  res.send("app on vercel");
+});
 
 async function fetch_info(url, query) {
     try {
@@ -27,17 +29,15 @@ async function fetch_info(url, query) {
     }
 }
 
-async function fetch_file_id(url,id) {
-    let full = `${url}${id}`
-
-    let full2 = `https://api.mangadex.org/cover?manga%5B%5D=${id}&order%5BcreatedAt%5D=asc&order%5BupdatedAt%5D=asc&order%5Bvolume%5D=asc`
+async function fetch_file_id(url, id) {
+    let full2 = `https://api.mangadex.org/cover?manga%5B%5D=${id}&order%5BcreatedAt%5D=asc&order%5BupdatedAt%5D=asc&order%5Bvolume%5D=asc`;
     
-    try{
-        const resp = await axios.get(full2)
-        return resp.data
-    }catch(err){
-        console.error("Error fetching manga info:", err)
-        throw err
+    try {
+        const resp = await axios.get(full2);
+        return resp.data;
+    } catch (err) {
+        console.error("Error fetching manga info:", err);
+        throw err;
     }
 }
 
@@ -62,8 +62,7 @@ app.get("/apiv2/manga/image/:coverid/:filename", async (req, res) => {
     res.send(`This page is about coverid and filename: ${coverid}, ${filename}`);
 });
 
-
-//for manga info
+// For manga info
 app.get("/aviv2/manga/info/:query", async (req, res) => {
     let s_query = req.params.query;
     try {
@@ -74,15 +73,15 @@ app.get("/aviv2/manga/info/:query", async (req, res) => {
     }
 });
 
-//for cover realated info
-app.get('/aviv2/manga/cover/:manga_id', async(req,res)=>{
-    let id= req.params.manga_id
-    try{
-        let resp = await fetch_file_id(cover_url, id)
-        res.json(resp)
-    }catch(err){
-        res.status(500).send(err)
+// For cover related info
+app.get('/aviv2/manga/cover/:manga_id', async(req, res) => {
+    let id = req.params.manga_id;
+    try {
+        let resp = await fetch_file_id(cover_url, id);
+        res.json(resp);
+    } catch(err) {
+        res.status(500).send(err);
     }
-})
+});
 
 app.listen(3000, () => console.log("Server ready on port 3000."));
