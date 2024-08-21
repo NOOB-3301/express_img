@@ -1,1 +1,1 @@
-{ "version": 2, "rewrites": [{ "source": "/(.*)", "destination": "/api" }, {"source" :"/aviv2/manga/info/:query", "destination": "/aviv2/manga/info/:query"},{"source":"/aviv2/manga/cover/:manga_id","destination":"/aviv2/manga/cover/:manga_id"}] }
+{ "version": 2, "rewrites": [{ "source": "/(.*)", "destination": "/api" }] }
