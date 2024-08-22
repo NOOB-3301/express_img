@@ -37,8 +37,10 @@ async function fetch_file_id(url, id) {
     }
 }
 
-app.get("/manga/image/", async (req, res) => {
-  const imageUrl = "https://uploads.mangadex.org/covers/8f3e1818-a015-491d-bd81-3addc4d7d56a/26dd2770-d383-42e9-a42b-32765a4d99c8.png";
+app.get("/manga/image/:id/:filename", async (req, res) => {
+    let id= req.params.id
+    let file = req.params.filename
+  const imageUrl = `https://uploads.mangadex.org/covers/${id}/${file}`;
 
   try {
     const response = await axios.get(imageUrl, { responseType: 'arraybuffer' });
