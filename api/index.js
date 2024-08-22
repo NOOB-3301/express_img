@@ -63,29 +63,14 @@ app.get("/aviv2/manga/image/:id/:filename", async (req, res) => {
     const imageUrl = `https://uploads.mangadex.org/covers/${id}/${file}`;
 
     try {
-        const response = await axios({
-            url: imageUrl,
-            method: 'GET',
-            responseType: 'stream', // Stream the response
-        });
+        const response = await axios.get(imageUrl, { responseType: 'arraybuffer' });
+        const imageBuffer = Buffer.from(response.data, 'binary');
 
-        // Set the content type based on the file extension
-        const extension = file.split('.').pop();
-        let contentType = 'image/png'; // Default to PNG
-
-        if (extension === 'jpg' || extension === 'jpeg') {
-            contentType = 'image/jpeg';
-        } else if (extension === 'gif') {
-            contentType = 'image/gif';
-        }
-
-        res.setHeader('Content-Type', contentType);
-
-        // Pipe the image data directly to the response
-        response.data.pipe(res);
+        res.setHeader('Content-Type', response.headers['content-type']);
+        res.send(imageBuffer);
     } catch (error) {
-        console.error("Error fetching the image:", error.message);
-        res.status(500).send("Error fetching the image.");
+        console.error('Error fetching the image:', error);
+        res.status(500).send('Error fetching the image.');
     }
 });
 
