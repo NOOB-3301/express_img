@@ -60,7 +60,7 @@ async function fetch_file_id(url, id) {
 app.get("/aviv2/manga/image/:id/:filename", async (req, res) => {
     let id = req.params.id;
     let file = req.params.filename;
-    const imageUrl = `https://uploads.mangadex.org/cover/${id}/${file}`;
+    const imageUrl = `https://uploads.mangadex.org/covers/${id}/${file}`;
 
     try {
         const response = await axios.get(imageUrl, { responseType: 'arraybuffer' });
