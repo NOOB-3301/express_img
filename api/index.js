@@ -52,7 +52,7 @@ app.get("/aviv2/manga/image/:id/:filename", async (req, res) => {
 //     res.status(500).send("Error fetching the image.");
 //   }
 
-    res.write("<img src = "+imageUrl+">")
+    res.write(`${imageUrl}`)
     res.send()
 });
 
